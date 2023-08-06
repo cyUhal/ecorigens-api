@@ -8,6 +8,7 @@ connection();
 
 const app = express();
 const port = 3000;
+const ip = '0.0.0.0';
 
 app.use(cors());
 app.use(express.json());
@@ -27,6 +28,6 @@ app.use('/api/products',productsRoutes);
 
 
 
-app.listen(port, () => {
+app.listen(port, ip, () => {
     console.log('Server running on the port:', port)
 })
