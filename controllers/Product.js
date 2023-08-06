@@ -1,5 +1,4 @@
-
-const Article = require('../models/Article')
+const Product = require('../models/Product')
 const path = require('path')
 const fs = require('fs');
 
@@ -11,43 +10,43 @@ const create = (req, res) => {
 
     
 
-    const article = new Article(params)
+    const product = new Product(params)
 
-    article.save((error, articleSave) => {
-        if (error || !articleSave) {
+    product.save((error, productSave) => {
+        if (error || !productSave) {
             return res.status(400).json({
                 staus: 'error',
-                messge: 'Article could not be saved'
+                messge: 'Product could not be saved'
             })
         }
 
         return res.status(200).json({
             staus: 'success',
-            message: 'Article created successfully'
+            message: 'Product created successfully'
         })
 
     })
 }
 
 const toList = (req, res) => {
-    let consultation = Article.find({});
+    let consultation = Product.find({});
 
     if (req.params.last) {
         consultation.limit(3);
     }
 
     consultation.sort({ fecha: -1 })
-        .exec((error, articles) => {
-            if (error || !articles) {
+        .exec((error,products) => {
+            if (error || !products) {
                 return res.status(404).json({
                     status: "error",
-                    message: "No articles found!!"
+                    message: "No products found!!"
                 });
             }
             return res.status(200).send({
                 status: "success",
-                counter: articles.length,
-                articles
+                counter: products.length,
+                products
             });
         });
 }
@@ -56,57 +55,57 @@ const one = (req, res) => {
 
     let id = req.params.id;
 
-    Article.findById(id, (error, article) => {
+    Product.findById(id, (error, product) => {
         if (error || !article) {
             return res.status(404).json({
                 status: 'error',
-                message: 'No article found!!'
+                message: 'No product found!!'
             });
 
         }
 
         return res.status(200).send({
             status: 'success',
-            article
+            product
         });
 
     });
 }
 
 const delet = (req, res) => {
-    let articleId = req.params.id
-    Article.findByIdAndDelete({ _id: articleId }, (error, articleDelete) => {
+    let productId = req.params.id
+    Product.findByIdAndDelete({ _id: productId }, (error, productDelete) => {
         if (error || !articleDelete) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Error delete article!!'
+                message: 'Error delete product!!'
             });
         }
 
         return res.status(200).send({
             status: 'succes',
-            article: articleDelete,
-            message: 'Article deleted successfully'
+            article: productDelete,
+            message: 'Productdeleted successfully'
         })
     })
 }
 
 const edit = (req, res) => {
-    let articleId = req.params.id
+    let productId = req.params.id
 
     
 
-    Article.findOneAndUpdate({ _id: articleId }, req.body, { new: true }, (error, updatedArticle) => {
-        if (error || !updatedArticle) {
+    Product.findOneAndUpdate({ _id: productId }, req.body, { new: true }, (error, updatedProduct) => {
+        if (error || !updatedProduct) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Error update article!!'
+                message: 'Error update product!!'
             });
         }
         return res.status(200).send({
             status: 'succes',
-            article: updatedArticle,
-            message: 'Article updated successfully'
+            article: updatedProduct,
+            message: 'Product updated successfully'
         })
 
     })
@@ -138,12 +137,12 @@ const upLoad = (req, res) => {
     } else {
 
         
-        let articleId = req.params.id;
+        let productId = req.params.id;
 
         
-        Article.findOneAndUpdate({ _id: articleId }, { image: req.file.filename }, { new: true }, (error, updatedArticle) => {
+        Product.findOneAndUpdate({ _id: productId }, { image: req.file.filename }, { new: true }, (error, updatedProduct) => {
 
-            if (error || !updatedArticle) {
+            if (error || !updatedProduct) {
                 return res.status(500).json({
                     status: "error",
                     message: "Failed to update"
@@ -153,7 +152,7 @@ const upLoad = (req, res) => {
             
             return res.status(200).json({
                 status: "success",
-                article: updatedArticle,
+                product: updatedProduct,
                 file: req.file
             })
         });
@@ -164,7 +163,7 @@ const upLoad = (req, res) => {
 
 const image = (req, res) => {
     let file = req.params.file;
-    let physical_route = "../images/articles" + file;
+    let physical_route = "../images/products" + file;
 
     fs.stat(physical_route, (error, exists) => {
         if (exists) {

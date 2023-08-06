@@ -7,25 +7,24 @@ console.log('App initialized');
 connection();
 
 const app = express();
-const port = 3900;
+const port = 3901;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-//ver significado
+
 app.set('view engine', 'pug')
 
-const articlesRoutes = require('./routes/Articles');
+const articlesRoutes = require('./routes/articles');
 app.use('/api/articles',articlesRoutes);
 
-const UserRoutes = require('./routes/user');
-app.use('/api/user',UserRoutes);
+
+const productsRoutes = require('./routes/products');
+app.use('/api/products',productsRoutes);
 
 
-const groupRoutes = require('./routes/group');
- app.use('/api/group',groupRoutes);
- 
+
 
 
 app.listen(port, () => {

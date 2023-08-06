@@ -26,7 +26,6 @@ routes.delete('/article/:id', ArticleController.delet);
 routes.put('/article/:id', ArticleController.edit);
 routes.post("/upload_img/:id", [uploads.single("file0")], ArticleController.upLoad);
 routes.get("/image/:file", ArticleController.image);
-routes.get("/search/:searchs", ArticleController.search);
 
 
 
