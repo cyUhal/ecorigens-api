@@ -21,7 +21,7 @@ const uploads = multer({storage: storage})
 
 
 routes.post('/create', ProductsController.create);
-routes.get('/products/:last?', ProductsController.toList);
+routes.get('/product/:last?', ProductsController.toList);
 routes.get('/product/:id', ProductsController.one);
 routes.delete('/product/:id', ProductsController.delet);
 routes.put('/product/:id', ProductsController.edit);

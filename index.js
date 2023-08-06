@@ -7,7 +7,7 @@ console.log('App initialized');
 connection();
 
 const app = express();
-const port = 3901;
+const port = 3900;
 
 app.use(cors());
 app.use(express.json());
