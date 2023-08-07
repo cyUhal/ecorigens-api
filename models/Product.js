@@ -11,10 +11,14 @@ const ProductsSchema = Schema({
     },
     category: {
         type: String,
-        required: true,
+        
         
     },
     description: {
+        type: String,
+        required: true
+    },
+    propiedades:{
         type: String,
         required: true
     },
