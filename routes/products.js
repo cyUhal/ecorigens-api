@@ -1,35 +1,35 @@
-
-const express = require ("express");
-const ProductsController = require('../controllers/Product')
-const routes = express.Router()
+const express = require("express");
 const multer = require("multer");
+const ProductController = require("../controllers/Product");
+const router = express.Router();
 
 
-
-const storage = multer.diskStorage({
+const almacenamiento = multer.diskStorage({
     destination:function (req, file, cb)  {
-        cb(null, './images/products')
+        cb(null, './imagenes/products/')
     },
 
     filename:function (req, file, cb) {
-        cb(null, "products" + Date.now() + file.originalname);
+        cb(null, "product" + Date.now() + file.originalname);
     }
 })
 
-const uploads = multer({storage: storage}) 
+const subidas = multer({storage: almacenamiento})
   
 
 
-routes.post('/create', ProductsController.create);
-routes.get('/product/:last?', ProductsController.toList);
-routes.get('/product/:id', ProductsController.one);
-routes.delete('/product/:id', ProductsController.delet);
-routes.put('/product/:id', ProductsController.edit);
-routes.post("/upload_img/:id", [uploads.single("file0")], ProductsController.upLoad);
-routes.get("/image/:file", ProductsController.image);
 
 
 
 
+router.post("/crear", ProductController.create); 
+router.get("/articulos/:ultimos?", ProductController.toList);
+router.get("/articulo/:id", ProductController.one);
+router.delete("/articulo/:id", ProductController.delet);
+router.put("/articulo/:id", ProductController.edit);
+router.post("/subir-imagen/:id", [subidas.single("file0")], ProductController.upLoad);
+router.get("/imagen/:fichero", ProductController.image);
 
-module.exports= routes;
+
+
+module.exports = router; 
